@@ -6,6 +6,8 @@
 - `docs/ROADMAP_PRODUCTION_PHASED.md`
 - `docs/ROADMAP_EXECUTION_AUTOPILOT.md`
 - `docs/ROADMAP_EXECUTION_REAL.md`
+- `docs/release-candidate-checklist.json`
+- `docs/rollback-drill-checklist.json`
 - `tasks/NEXT.md`
 - `tasks/NEXT_PRODUCTION.md`
 - `tasks/ROADMAP_EXECPLAN.md`

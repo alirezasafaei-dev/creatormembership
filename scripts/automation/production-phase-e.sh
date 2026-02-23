@@ -26,6 +26,10 @@ marker="release-rollback-$(date +%s)-$RANDOM"
   echo "marker: $marker"
 } > "$EVIDENCE_DIR/summary.md"
 
+pnpm -w release:rollback:validate | tee "$EVIDENCE_DIR/rollback-contract.log"
+pnpm -w release:rc:gates | tee "$EVIDENCE_DIR/rc-gates.log"
+API_URL="http://127.0.0.1:4000" WEB_URL="http://127.0.0.1:3000" pnpm -w release:go-no-go:evidence | tee "$EVIDENCE_DIR/go-no-go.log"
+
 pnpm -w build | tee "$EVIDENCE_DIR/build.log"
 bash scripts/automation/db-backup.sh | tee "$EVIDENCE_DIR/backup.log"
 backup_file="$(sed -n 's/^DB_BACKUP_OK file=//p' "$EVIDENCE_DIR/backup.log" | tail -n1)"
@@ -52,10 +56,24 @@ fi
 
 pnpm -w smoke:all | tee "$EVIDENCE_DIR/smoke-all.log"
 
+latest_rc_report="$(ls -1t docs/release/reports/rc-gates-*.json 2>/dev/null | head -n1 || true)"
+latest_go_no_go="$(ls -1t docs/release/reports/go-no-go-*.md 2>/dev/null | head -n1 || true)"
+if [[ -n "$latest_rc_report" ]]; then
+  cp -f "$latest_rc_report" "$EVIDENCE_DIR/rc-gates-report.json"
+  cp -f "$latest_rc_report" "docs/release/reports/rc-gates-latest.json"
+fi
+if [[ -n "$latest_go_no_go" ]]; then
+  cp -f "$latest_go_no_go" "$EVIDENCE_DIR/go-no-go-report.md"
+  cp -f "$latest_go_no_go" "docs/release/reports/go-no-go-latest.md"
+fi
+
 {
   echo
   echo "completed_at: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
   echo "checks:"
+  echo "- rollback drill contract validated"
+  echo "- release candidate gates executed"
+  echo "- go/no-go evidence generated"
   echo "- build passed"
   echo "- backup created"
   echo "- rollback restore verified with marker"

@@ -4,31 +4,9 @@
 
 @font-face {
   font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXThin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXUltraLight.ttf') format('truetype');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXLight.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXRegular.ttf') format('truetype');
+  src:
+    url('/fonts/IRANSansX-Regular.woff2') format('woff2'),
+    url('/fonts/fonnts.com-IRANSansXRegular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -36,7 +14,9 @@
 
 @font-face {
   font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXMedium.ttf') format('truetype');
+  src:
+    url('/fonts/IRANSansX-Medium.woff2') format('woff2'),
+    url('/fonts/fonnts.com-IRANSansXMedium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -44,45 +24,211 @@
 
 @font-face {
   font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXDemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXBold.ttf') format('truetype');
+  src:
+    url('/fonts/IRANSansX-Bold.woff2') format('woff2'),
+    url('/fonts/fonnts.com-IRANSansXBold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IRANSansX';
-  src: url('/fonts/fonnts.com-IRANSansXBlack.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --bg: #0b1120;
-  --fg: #f8fafc;
-  --muted: rgb(226 232 240 / 0.75);
+  --font-sans: 'IRANSansX', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial;
+
+  --bg-primary: #f4f7fb;
+  --surface-1: #ffffff;
+  --surface-2: #eef3f9;
+  --surface-3: #e6edf6;
+
+  --text-primary: #111827;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  --color-primary: #2563eb;
+  --color-primary-rgb: 37 99 235;
+  --border-default: #d5deea;
+
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.07);
+  --shadow-md: 0 10px 24px -14px rgb(15 23 42 / 0.35);
+  --shadow-lg: 0 20px 44px -22px rgb(15 23 42 / 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: IRANSansX, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial;
-  background: radial-gradient(circle at top, rgb(37 99 235 / 0.18), transparent 45%), var(--bg);
-  color: var(--fg);
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 14% 10%, rgb(var(--color-primary-rgb) / 0.18), transparent 34%),
+    radial-gradient(circle at 86% 6%, rgb(var(--color-primary-rgb) / 0.1), transparent 32%),
+    var(--bg-primary);
 }
 
+.site-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.skip-link {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  transform: translateY(-130%);
+  z-index: 100;
+  border-radius: 0 0 12px 12px;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
+.section-wrap {
+  padding: 3.5rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-wrap {
+    padding: 5rem 0;
+  }
+}
+
+.section-head {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.section-subtitle {
+  margin-top: 0.65rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+.hero-backdrop {
+  position: relative;
+  overflow: hidden;
+}
+
+.surface-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at top, black 45%, transparent 85%);
+}
+
+.surface-card {
+  border: 1px solid var(--border-default);
+  background: color-mix(in srgb, var(--surface-1) 88%, white 12%);
+  border-radius: 18px;
+  padding: 1.1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.surface-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-primary) 34%, var(--border-default));
+  box-shadow: var(--shadow-md);
+}
+
+.card-link {
+  display: block;
+  text-decoration: none;
+}
+
+.kpi-card {
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.7);
+  padding: 0.95rem 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 32%, white);
+  background: rgb(var(--color-primary-rgb) / 0.1);
+  color: var(--color-primary);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 0.65rem 0.95rem;
+  transition: transform 170ms ease, box-shadow 170ms ease, background 170ms ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  background: var(--surface-1);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  background: var(--surface-2);
+}
+
+.fade-up {
+  animation: fadeUp 480ms ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

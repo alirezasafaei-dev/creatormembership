@@ -15,7 +15,10 @@ async function main() {
   await runMigrations(db);
 
   const app = Fastify({ logger: true });
-  registerApiBasics(app);
+  registerApiBasics(app, {
+    allowOrigins: config.corsAllowOrigins,
+    csrfEnabled: config.csrfEnabled,
+  });
   registerBasicRateLimit(app, {
     windowMs: 60_000,
     max: 240,

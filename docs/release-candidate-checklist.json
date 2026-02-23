@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "envGates": [
+    "env.database_url.present",
+    "env.payment_webhook_secret.present"
+  ],
+  "securityGates": [
+    "security.scan.clean",
+    "security.headers.enforced"
+  ],
+  "qualityGates": [
+    {
+      "id": "rc_docs_validate",
+      "command": "pnpm -w docs:validate",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_lint",
+      "command": "pnpm -w lint",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_typecheck",
+      "command": "pnpm -w typecheck",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_test",
+      "command": "pnpm -w test",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_build",
+      "command": "pnpm -w build",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_smoke_all",
+      "command": "pnpm -w smoke:all",
+      "tier": "core",
+      "blocking": true
+    },
+    {
+      "id": "rc_security_scan",
+      "command": "pnpm -w security:scan",
+      "tier": "extended",
+      "blocking": true
+    },
+    {
+      "id": "rc_contracts",
+      "command": "pnpm -w contracts:check",
+      "tier": "extended",
+      "blocking": true
+    },
+    {
+      "id": "rc_perf",
+      "command": "pnpm -w perf:check",
+      "tier": "extended",
+      "blocking": true
+    },
+    {
+      "id": "rc_regression",
+      "command": "pnpm -w test:regression",
+      "tier": "extended",
+      "blocking": true
+    }
+  ],
+  "releaseOutputs": [
+    "docs/release/reports/rc-gates-latest.json",
+    "docs/release/reports/go-no-go-latest.md"
+  ]
+}

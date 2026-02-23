@@ -8,6 +8,18 @@
 - هر تغییر باید rollback-safe باشد.
 - هیچ فاز بدون گذر از gateهای کیفیت و امنیت بسته نشود.
 
+## Current Reality Baseline (2026-02-23)
+- Evidence موجود در `.codex/production-evidence/` معتبر است، اما فعلا در سطح local/prod-sim اجرا شده و به معنی بسته‌شدن کامل production phases نیست.
+- معیار «Done» برای هر Production Phase فقط وقتی معتبر است که Exit Criteria همان فاز در محیط واقعی (یا staging مستقل معادل production) اثبات شود.
+- تا زمان تکمیل آیتم‌های باز، این سند باید به‌عنوان برنامه‌ی در حال اجرا در نظر گرفته شود، نه «برنامه‌ی کامل‌شده».
+- Evidence محلی جدیدتر (mode=all): runId `20260223-123432` با `overallOk=true`.
+- موارد پیاده‌شده (اما هنوز معادل close کامل Production Phase C نیست):
+  - CORS allowlist + preflight handling
+  - CSRF block برای درخواست‌های cross-site state-changing
+  - session device visibility + مدیریت سشن کاربر
+- وضعیت برد Production بعد از اجرای خودکار force-cycle:
+  - `tasks/NEXT_PRODUCTION.md` اکنون 26 آیتم باز دارد (از 37 آیتم باز قبلی کمتر شده است).
+
 ## Production Phase A - Real Payment Go-Live
 هدف: آماده‌سازی درگاه واقعی در سطح Production
 - Scope:
@@ -35,10 +47,10 @@
 ## Production Phase C - Security Hardening
 هدف: کاهش ریسک امنیتی و انطباق عملیاتی
 - Scope:
-  - session hardening (rotation, invalidation, device visibility)
-  - abuse controls (rate-limit, anomaly flags, brute-force defense)
-  - secure headers/cors/csrf policy
-  - secret scanning + dependency vuln workflow
+  - تکمیل hardening سشن (anomaly flags, brute-force defense, policy review)
+  - abuse controls قابل اندازه‌گیری (rate-limit baselines + abuse detection)
+  - hardening پیشرفته CSRF برای flows مرورگرمحور + verification playbook
+  - dependency vulnerability lifecycle (scan/triage/fix/evidence)
 - Exit Criteria:
   - security checklist بدون finding بحرانی باز
   - smoke امنیتی و مسیرهای حساس پاس
