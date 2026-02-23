@@ -2,7 +2,18 @@ import type { FastifyInstance } from 'fastify';
 import type { Db } from './db';
 import { ApiError } from './http';
 import { auditEvent } from './audit';
-import { createSession, getUserById, getUserBySession, revokeAllSessions, revokeSession, rotateSession, signIn, signUp } from './auth';
+import {
+  createSession,
+  getUserById,
+  getUserBySession,
+  listUserSessions,
+  revokeAllSessions,
+  revokeSession,
+  revokeSessionByIdForUser,
+  rotateSession,
+  signIn,
+  signUp,
+} from './auth';
 import fs from 'fs';
 import path from 'path';
 import {
@@ -19,6 +30,10 @@ function getAuthToken(req: any): string | null {
   const m = h.match(/^Bearer\s+(.+)$/i);
   if (!m) return null;
   return m[1];
+}
+
+function getUserAgent(req: any): string {
+  return String(req.headers?.['user-agent'] || '');
 }
 
 function normalizePayload(input: any): Record<string, string | undefined> {
@@ -103,7 +118,10 @@ export function registerPublicRoutes(app: FastifyInstance, db: Db, opts: {
     const body = req.body || {};
     if (!body.email || !body.password) throw new ApiError('AUTH_INVALID_REQUEST', 'email/password required', 400);
     const user = await signUp(db, { email: body.email, password: body.password, name: body.name });
-    const session = await createSession(db, user.id);
+    const session = await createSession(db, user.id, {
+      ipAddress: String(req.ip || ''),
+      userAgent: getUserAgent(req),
+    });
     await auditEvent(db, { actorUserId: user.id, action: 'auth.signup', entityType: 'user', entityId: user.id, payload: { email: user.email }, traceId });
     return { user, session };
   });
@@ -113,7 +131,10 @@ export function registerPublicRoutes(app: FastifyInstance, db: Db, opts: {
     const body = req.body || {};
     if (!body.email || !body.password) throw new ApiError('AUTH_INVALID_REQUEST', 'email/password required', 400);
     const user = await signIn(db, { email: body.email, password: body.password });
-    const session = await createSession(db, user.id);
+    const session = await createSession(db, user.id, {
+      ipAddress: String(req.ip || ''),
+      userAgent: getUserAgent(req),
+    });
     await auditEvent(db, { actorUserId: user.id, action: 'auth.signin', entityType: 'user', entityId: user.id, payload: {}, traceId });
     return { user, session };
   });
@@ -122,7 +143,10 @@ export function registerPublicRoutes(app: FastifyInstance, db: Db, opts: {
     const traceId = String(req.traceId || '');
     const token = getAuthToken(req);
     if (!token) throw new ApiError('AUTH_INVALID_TOKEN', 'Missing token', 401);
-    const rotated = await rotateSession(db, token);
+    const rotated = await rotateSession(db, token, {
+      ipAddress: String(req.ip || ''),
+      userAgent: getUserAgent(req),
+    });
     const user = await getUserById(db, rotated.userId);
     if (!user) throw new ApiError('AUTH_INVALID_TOKEN', 'Invalid token', 401);
     await auditEvent(db, { actorUserId: user.id, action: 'auth.refresh', entityType: 'user', entityId: user.id, payload: {}, traceId });
@@ -157,6 +181,44 @@ export function registerPublicRoutes(app: FastifyInstance, db: Db, opts: {
     const user = await getUserBySession(db, token);
     if (!user) throw new ApiError('AUTH_INVALID_TOKEN', 'Invalid token', 401);
     return { user };
+  });
+
+  app.get('/api/v1/auth/sessions', async (req: any) => {
+    const token = getAuthToken(req);
+    if (!token) throw new ApiError('AUTH_INVALID_TOKEN', 'Missing token', 401);
+    const user = await getUserBySession(db, token);
+    if (!user) throw new ApiError('AUTH_INVALID_TOKEN', 'Invalid token', 401);
+    const items = await listUserSessions(db, user.id, token);
+    return {
+      items: items.map((item) => ({
+        id: item.id,
+        createdAt: item.created_at,
+        lastSeenAt: item.last_seen_at,
+        expiresAt: item.expires_at,
+        userAgent: item.user_agent,
+        ipAddress: item.ip_address,
+        current: Boolean(item.is_current),
+      })),
+    };
+  });
+
+  app.delete('/api/v1/auth/sessions/:sessionId', async (req: any) => {
+    const traceId = String(req.traceId || '');
+    const token = getAuthToken(req);
+    if (!token) throw new ApiError('AUTH_INVALID_TOKEN', 'Missing token', 401);
+    const user = await getUserBySession(db, token);
+    if (!user) throw new ApiError('AUTH_INVALID_TOKEN', 'Invalid token', 401);
+    const sessionId = String(req.params?.sessionId || '');
+    if (!sessionId) throw new ApiError('AUTH_INVALID_REQUEST', 'sessionId required', 400);
+    const removed = await revokeSessionByIdForUser(db, user.id, sessionId);
+    await auditEvent(db, {
+      actorUserId: user.id,
+      action: 'auth.session_revoke',
+      entityType: 'session',
+      payload: { sessionId, removed },
+      traceId,
+    });
+    return { ok: true, removed };
   });
 
   app.get('/api/v1/creators', async (req: any) => {

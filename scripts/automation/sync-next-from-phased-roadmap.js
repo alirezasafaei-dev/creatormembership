@@ -150,7 +150,11 @@ const phaseChecks = {
       webCreatorSlugPage.includes('generateMetadata') &&
       routes.includes("/api/v1/creators/:slug/plans"),
     searchFilter: routes.includes("/api/v1/creators") && routes.includes("req.query?.q"),
-    seo: webSitemap.includes('export default async function sitemap') && webCreatorSlugPage.includes('application/ld+json'),
+    seo:
+      webSitemap.includes('export default async function sitemap') &&
+      (webCreatorSlugPage.includes('application/ld+json') ||
+        webCreatorSlugPage.includes('JsonLd') ||
+        webCreatorSlugPage.includes('generateCreatorSchema')),
   },
   '6': {
     localRuntime:

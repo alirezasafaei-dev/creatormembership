@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "drills": [
+    {
+      "id": "RB-001",
+      "name": "DB restore rollback drill",
+      "ownerRole": "engineering_lead",
+      "steps": [
+        "run_db_backup",
+        "insert_restore_marker",
+        "restore_backup_and_verify_marker_removed"
+      ],
+      "successCriteria": [
+        "backup_created",
+        "marker_removed_after_restore"
+      ],
+      "evidenceRequired": true
+    },
+    {
+      "id": "RB-002",
+      "name": "Release gates replay after rollback",
+      "ownerRole": "quality_engineer",
+      "steps": [
+        "run_smoke_all",
+        "run_contracts_check",
+        "run_perf_check"
+      ],
+      "successCriteria": [
+        "gates_pass_after_restore",
+        "critical_paths_are_healthy"
+      ],
+      "evidenceRequired": true
+    },
+    {
+      "id": "RB-003",
+      "name": "UX and accessibility sanity checks",
+      "ownerRole": "ux_accessibility",
+      "steps": [
+        "verify_public_routes",
+        "verify_creator_discovery",
+        "verify_focus_navigation_and_skip_link"
+      ],
+      "successCriteria": [
+        "key_pages_accessible",
+        "critical_navigation_works"
+      ],
+      "evidenceRequired": true
+    }
+  ],
+  "reporting": {
+    "required": [
+      "incident_id",
+      "rollback_decision",
+      "verification_evidence",
+      "final_status"
+    ],
+    "allowedStatus": [
+      "passed",
+      "failed",
+      "partial"
+    ]
+  }
+}

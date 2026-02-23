@@ -11,12 +11,12 @@
     "jobs:enqueue:ops": "node dist/jobs-enqueue-ops.js"
   },
   "dependencies": {
-    "fastify": "^5.2.0",
+    "fastify": "^5.7.4",
     "pg": "^8.18.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.19.11",
     "@types/pg": "^8.16.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.9.3"
   }
 }

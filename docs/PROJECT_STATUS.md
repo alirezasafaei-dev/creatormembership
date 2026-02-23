@@ -1,6 +1,6 @@
 # Project Status (Reality Check)
 
-Last verified: 2026-02-20
+Last verified: 2026-02-23
 
 ## Verified Done
 - API MVP is running:
@@ -9,7 +9,10 @@ Last verified: 2026-02-20
   - Subscription checkout
   - Mock gateway callback
   - Audit/admin baseline endpoints
-- Web app exists as local-first UI skeleton.
+- Web app public experience upgraded beyond skeleton:
+  - landing page + static trust pages (`/about`, `/how-it-works`, `/pricing`, `/privacy`)
+  - shared site shell (`SiteHeader`, `SiteFooter`, `Container`)
+  - SEO routes (`robots.txt`, `sitemap.xml`) + metadata/JSON-LD baseline
 - Database schema and migrations run at API startup.
 - Quality and governance gates are green:
   - `docs:validate`, `lint`, `typecheck`, `local-first:scan`, `test`, `build`, `test:integration`, `test:e2e`
@@ -34,8 +37,15 @@ Last verified: 2026-02-20
   - roles enforced: `platform_admin`, `support_admin`, `auditor`
   - tighter per-route rate limits for auth and callback routes
   - session lifecycle hardening: `auth/refresh`, `auth/signout`, `auth/signout-all`
+- Production Phase C partial hardening implemented in code:
+  - allowlist-based CORS policy + preflight handling in API hooks
+  - CSRF protection for cross-site mutating requests
+  - session device visibility (`user_agent`, `ip_address`, `last_seen_at`)
+  - user session management endpoints:
+    - `GET /api/v1/auth/sessions`
+    - `DELETE /api/v1/auth/sessions/:sessionId`
 - Latest local evidence run:
-  - `.codex/local-evidence/latest.json` shows all gates and smoke suite passing.
+  - latest full evidence (mode=all, gates + smoke): runId `20260223-123432` (`overallOk=true`)
 - Phase 4 content-protection baseline implemented:
   - content metadata + publish endpoints
   - tokenized download URL (`GET /api/v1/download/:token`)
@@ -59,6 +69,12 @@ Last verified: 2026-02-20
   - callback replay protection via `webhook_receipts` (duplicate webhook/callback guarded)
   - baseline security headers enforced at API edge (`nosniff`, `frame deny`, `referrer policy`, `permissions policy`)
   - database backup/restore automation scripts (`db:backup`, `db:restore`)
+  - release governance automation imported/adapted from production sibling repos:
+    - release candidate gates runner (`scripts/release/run-rc-gates.mjs`)
+    - rollback drill checklist validator (`scripts/release/validate-rollback-drill.mjs`)
+    - go/no-go evidence generator (`scripts/release/generate-go-no-go-evidence.sh`)
+  - production phase automation executed end-to-end with force rerun across A..G:
+    - evidence batches generated under `.codex/production-evidence/*-phase-{a..g}`
 - Codex import hardening progress (new):
   - imported membership blueprint pack to `docs/blueprints/codex-import/` with index
   - normalization utilities implemented in `apps/api/src/normalize.ts`
@@ -67,7 +83,28 @@ Last verified: 2026-02-20
   - minimal admin ops page implemented at `/admin/ops`
 
 ## Not Done Yet
-- (current critical items: none for local-first runtime baseline)
+- Production Phase A (Real Payment Go-Live):
+  - `smoke:idpay-callback` فقط callback محلی را شبیه‌سازی می‌کند و هنوز E2E واقعی با provider بیرونی ندارد.
+  - شواهدی از فعال‌سازی provider واقعی روی محیط Production و تایید owner ثبت نشده است.
+- Production Phase B (Data Safety and DR):
+  - سیاست backup افزایشی (incremental) و retention policy در اسکریپت‌ها پیاده نشده است.
+  - سند تاییدشده RPO/RTO و گزارش DR drill روی محیط staging/prod-sim مستقل ثبت نشده است.
+- Production Phase C (Security Hardening):
+  - dependency vulnerability workflow واقعی (scan/triage/fix/evidence) هنوز ثبت و enforce نشده است.
+  - hardening پیشرفته CSRF (double-submit token/nonce برای فرم‌های مرورگرمحور) هنوز اضافه نشده است.
+  - anomaly detection برای session abuse (rules + alerts) هنوز پیاده نشده است.
+- Production Phase D (Observability and SRE):
+  - متریک‌های عملیاتی و alert ruleهای واقعی (API/DB/Payments) پیاده‌سازی نشده‌اند.
+  - SLO/SLI و error-budget review flow به‌صورت اجرایی ثبت نشده است.
+- Production Phase E (Release Engineering):
+  - strategy عملیاتی deployment (rolling/blue-green) تعریف و تست نشده است.
+  - artifact provenance و build reproducibility با شواهد قابل ارجاع تکمیل نشده است.
+- Production Phase F (Performance and Cost Efficiency):
+  - profiling واقعی مسیرهای داغ API/DB و برنامه caching/index optimization تکمیل نشده است.
+  - cost guardrailهای runtime/infra تعریف و enforce نشده‌اند.
+- Production Phase G (Compliance and Governance):
+  - least-privilege access governance به‌صورت policy + automation قابل اثبات بسته نشده است.
+  - چرخه periodic production-readiness review هنوز evidence عملیاتی دوره‌ای ندارد.
 
 ## Progress Snapshot (Pragmatic)
 - Engineering baseline and delivery pipeline: strong

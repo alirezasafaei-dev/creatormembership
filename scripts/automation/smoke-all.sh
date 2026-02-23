@@ -7,6 +7,23 @@ PG_DATA="$PG_ROOT/data"
 PG_LOG="$PG_ROOT/postgres.log"
 PG_PORT="${PG_PORT:-55438}"
 
+port_in_use() {
+  local port="$1"
+  if command -v ss >/dev/null 2>&1; then
+    ss -ltn "( sport = :${port} )" | tail -n +2 | grep -q .
+    return
+  fi
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1
+    return
+  fi
+  return 1
+}
+
+while port_in_use "$PG_PORT"; do
+  PG_PORT=$((PG_PORT + 1))
+done
+
 rm -rf "$PG_ROOT"
 mkdir -p "$PG_ROOT"
 "$PG_BIN/initdb" -D "$PG_DATA" -A trust >/tmp/asdev_pg_smoke_all_init.log

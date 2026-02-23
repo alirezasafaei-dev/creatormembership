@@ -70,6 +70,9 @@
     "production:phase-c": "bash scripts/automation/production-phase-c.sh",
     "production:phase-f": "bash scripts/automation/production-phase-f.sh",
     "production:phase-g": "bash scripts/automation/production-phase-g.sh",
-    "production:auto:complete": "bash scripts/automation/production-auto-complete.sh"
+    "production:auto:complete": "bash scripts/automation/production-auto-complete.sh",
+    "release:rollback:validate": "node scripts/release/validate-rollback-drill.mjs",
+    "release:rc:gates": "node scripts/release/run-rc-gates.mjs --tier=extended",
+    "release:go-no-go:evidence": "bash scripts/release/generate-go-no-go-evidence.sh"
   }
 }

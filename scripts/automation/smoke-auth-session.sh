@@ -77,6 +77,29 @@ signin2="$(curl -fsS -X POST "$BASE_URL/api/v1/auth/signin" -H 'content-type: ap
 t3="$(jq -r '.session.token' <<<"$signin1")"
 t4="$(jq -r '.session.token' <<<"$signin2")"
 
+sessions_list="$(curl -fsS "$BASE_URL/api/v1/auth/sessions" -H "authorization: Bearer $t3")"
+sessions_count="$(jq -r '.items | length' <<<"$sessions_list")"
+if [[ "$sessions_count" -lt 2 ]]; then
+  echo "SMOKE_FAIL: expected at least 2 active sessions, got=$sessions_count" >&2
+  exit 2
+fi
+
+session_to_revoke="$(jq -r '.items[] | select(.current == false) | .id' <<<"$sessions_list" | head -n1)"
+if [[ -z "$session_to_revoke" || "$session_to_revoke" == "null" ]]; then
+  echo "SMOKE_FAIL: could not find a non-current session to revoke" >&2
+  exit 2
+fi
+
+curl -fsS -X DELETE "$BASE_URL/api/v1/auth/sessions/$session_to_revoke" -H "authorization: Bearer $t3" >/dev/null
+
+set +e
+code_t4_after_revoke="$(curl -s -o /tmp/auth_t4_after_revoke.json -w '%{http_code}' "$BASE_URL/api/v1/me" -H "authorization: Bearer $t4")"
+set -e
+if [[ "$code_t4_after_revoke" != "401" ]]; then
+  echo "SMOKE_FAIL: revoked session token must be invalid, got=$code_t4_after_revoke" >&2
+  exit 2
+fi
+
 out_all="$(curl -fsS -X POST "$BASE_URL/api/v1/auth/signout-all" -H "authorization: Bearer $t3")"
 removed="$(jq -r '.removed' <<<"$out_all")"
 if [[ "$removed" -lt 1 ]]; then

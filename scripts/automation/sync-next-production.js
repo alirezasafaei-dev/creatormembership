@@ -14,6 +14,12 @@ const dbBackupPath = path.join(root, 'scripts/automation/db-backup.sh');
 const dbRestorePath = path.join(root, 'scripts/automation/db-restore.sh');
 const packageJsonPath = path.join(root, 'package.json');
 const productionEvidenceRootPath = path.join(root, '.codex/production-evidence');
+const releaseRcGatesPath = path.join(root, 'scripts/release/run-rc-gates.mjs');
+const releaseRollbackValidatePath = path.join(root, 'scripts/release/validate-rollback-drill.mjs');
+const releaseChecklistPath = path.join(root, 'docs/release-candidate-checklist.json');
+const rollbackChecklistPath = path.join(root, 'docs/rollback-drill-checklist.json');
+const releaseRcLatestReportPath = path.join(root, 'docs/release/reports/rc-gates-latest.json');
+const releaseGoNoGoLatestPath = path.join(root, 'docs/release/reports/go-no-go-latest.md');
 
 if (!fs.existsSync(roadmapPath)) {
   console.error(`ERROR: missing ${roadmapPath}`);
@@ -85,50 +91,109 @@ const gates = {
     hasOk(evidenceAll, 'pnpm -w evidence:record'),
 };
 
-const phaseDone = {
-  A:
-    gates.docs &&
-    gates.contracts &&
-    routes.includes('webhook_receipts') &&
-    routes.includes('payment.callback_replay') &&
-    smokeIdpay.includes('replayed=true') &&
-    hasProductionEvidenceTag('phase-a'),
-  B:
-    gates.docs &&
-    fs.existsSync(dbBackupPath) &&
-    fs.existsSync(dbRestorePath) &&
-    packageJson.includes('"db:backup"') &&
-    packageJson.includes('"db:restore"') &&
-    hasProductionEvidenceTag('phase-b'),
-  C:
-    gates.docs &&
-    server.includes('X-Content-Type-Options') &&
-    server.includes('X-Frame-Options') &&
-    server.includes('Referrer-Policy') &&
-    server.includes('Permissions-Policy'),
-  D: gates.docs && gates.contracts && gates.perf && hasProductionEvidenceTag('phase-d'),
-  E: gates.docs && gates.build && gates.smokeAll && hasProductionEvidenceTag('phase-e'),
-  F: gates.perf && gates.build && hasProductionEvidenceTag('phase-f'),
-  G: gates.contracts && gates.localFirst && gates.docs && hasProductionEvidenceTag('phase-g'),
+const phaseEvidence = {
+  a: hasProductionEvidenceTag('phase-a'),
+  b: hasProductionEvidenceTag('phase-b'),
+  c: hasProductionEvidenceTag('phase-c'),
+  d: hasProductionEvidenceTag('phase-d'),
+  e: hasProductionEvidenceTag('phase-e'),
+  f: hasProductionEvidenceTag('phase-f'),
+  g: hasProductionEvidenceTag('phase-g'),
 };
+
+const checks = {
+  aProviderLocalFlow: smokeIdpay.includes('idpay'),
+  bBackupRestoreScripts: fs.existsSync(dbBackupPath) && fs.existsSync(dbRestorePath) && phaseEvidence.b,
+  cCorsCsrf:
+    phaseEvidence.c &&
+    server.includes('allowOrigins') &&
+    server.includes('csrfEnabled') &&
+    server.includes('registerApiBasics'),
+  cSessionVisibility:
+    phaseEvidence.c &&
+    routes.includes('/api/v1/auth/sessions') &&
+    routes.includes('/api/v1/auth/sessions/:sessionId'),
+  dOpsBaseline: phaseEvidence.d,
+  eRollbackAndRc:
+    phaseEvidence.e &&
+    fs.existsSync(releaseRcGatesPath) &&
+    fs.existsSync(releaseRollbackValidatePath) &&
+    fs.existsSync(releaseChecklistPath) &&
+    fs.existsSync(rollbackChecklistPath) &&
+    fs.existsSync(releaseRcLatestReportPath) &&
+    fs.existsSync(releaseGoNoGoLatestPath) &&
+    packageJson.includes('release:rc:gates') &&
+    packageJson.includes('release:rollback:validate') &&
+    packageJson.includes('release:go-no-go:evidence'),
+  fPerfBaseline: phaseEvidence.f && gates.perf,
+  gRecurringEvidence: phaseEvidence.g,
+};
+
+function mark(done) {
+  return done ? 'x' : ' ';
+}
 
 const lines = [];
 lines.push('# Next Production Tasks (No Timeline)');
 lines.push('');
 lines.push(`> Updated: ${new Date().toISOString().slice(0, 10)}`);
-lines.push('> Rule: production phases close only with evidence-backed exits.');
+lines.push('> Rule: production phases close only with evidence-backed exits in real/prod-like environments.');
+lines.push('');
+lines.push('## Weekly Reality Checklist (Not Actually Closed Yet)');
+lines.push('- [ ] Phase A: اجرای E2E واقعی با provider بیرونی (نه callback شبیه‌سازی‌شده محلی)');
+lines.push('- [ ] Phase A: تایید owner برای go-live provider + incident runbook امضاشده');
+lines.push('- [ ] Phase B: پیاده‌سازی backup incremental + retention policy قابل اجرا');
+lines.push('- [ ] Phase B: DR drill روی staging/prod-sim مستقل + سند RPO/RTO تاییدشده');
+lines.push(`- [${mark(checks.cCorsCsrf)}] Phase C: enforce baseline CORS/CSRF policy در API (local/prod-sim)`);
+lines.push('- [ ] Phase C: dependency vulnerability workflow چرخه‌ای (scan/triage/fix/evidence)');
+lines.push(`- [${mark(checks.cSessionVisibility)}] Phase C: device visibility برای sessionها`);
+lines.push('- [ ] Phase D: metrics + alerts واقعی برای API/DB/Payments');
+lines.push('- [ ] Phase D: تعریف و پایش SLO/SLI + error budget review');
+lines.push('- [ ] Phase E: strategy deployment (rolling/blue-green) + dry-run مستند');
+lines.push('- [ ] Phase E: artifact provenance + reproducible build evidence');
+lines.push('- [ ] Phase F: profiling مسیرهای داغ + برنامه cache/index با before/after metrics');
+lines.push('- [ ] Phase F: cost guardrails برای runtime/infra');
+lines.push('- [ ] Phase G: least-privilege governance با automation قابل audit');
+lines.push(`- [${mark(checks.gRecurringEvidence)}] Phase G: چرخه دوره‌ای production-readiness review با evidence تکرارشونده`);
 lines.push('');
 lines.push('## Production Phase Board');
 for (const m of phaseMatches) {
   const id = m[1];
   const title = m[2].trim();
-  const status = Boolean(phaseDone[id] || false);
-  const implemented = ['A', 'B', 'C', 'D', 'E', 'F', 'G'].includes(id) ? status : false;
-  const validated = ['A', 'B', 'C', 'D', 'E', 'F', 'G'].includes(id) ? status : false;
   lines.push(`### Production Phase ${id} - ${title}`);
-  lines.push(`- [${status ? 'x' : ' '}] Phase status`);
-  lines.push(`- [${implemented ? 'x' : ' '}] Implement scope items for Phase ${id}`);
-  lines.push(`- [${validated ? 'x' : ' '}] Validate exit criteria for Phase ${id}`);
+  if (id === 'A') {
+    lines.push('- [ ] Run real provider E2E in controlled prod-like environment');
+    lines.push(`- [${mark(checks.aProviderLocalFlow && phaseEvidence.a)}] Verify callback/reconcile idempotency in local/prod-sim evidence`);
+    lines.push('- [ ] Finalize and sign off payment incident runbook');
+  } else if (id === 'B') {
+    lines.push('- [ ] Add incremental backup workflow');
+    lines.push('- [ ] Define retention/data integrity checks');
+    lines.push(`- [${mark(checks.bBackupRestoreScripts)}] Execute and record DR drill (local/prod-sim evidence)`);
+    lines.push('- [ ] Publish approved RPO/RTO targets');
+  } else if (id === 'C') {
+    lines.push(`- [${mark(checks.cCorsCsrf)}] Enforce baseline CORS/CSRF policy and verification checks`);
+    lines.push('- [ ] Implement dependency vulnerability pipeline and triage process');
+    lines.push(`- [${mark(checks.cSessionVisibility)}] Add device/session visibility controls`);
+  } else if (id === 'D') {
+    lines.push(`- [${mark(checks.dOpsBaseline)}] Implement ops baseline (health/contracts/perf/RBAC evidence)`);
+    lines.push('- [ ] Define and test critical alert rules');
+    lines.push('- [ ] Define SLO/SLI and error-budget review cadence');
+  } else if (id === 'E') {
+    lines.push('- [ ] Implement and test rolling/blue-green deployment plan');
+    lines.push(`- [${mark(checks.eRollbackAndRc)}] Validate rollback procedure with post-rollback smoke + RC gates`);
+    lines.push('- [ ] Add artifact provenance + reproducible build checks');
+  } else if (id === 'F') {
+    lines.push(`- [${mark(checks.fPerfBaseline)}] Performance baseline checks (perf + regression evidence)`);
+    lines.push('- [ ] Define caching/index strategy with benchmark evidence');
+    lines.push('- [ ] Add runtime/infra cost guardrails and report');
+  } else if (id === 'G') {
+    lines.push('- [ ] Enforce least-privilege access governance workflow');
+    lines.push('- [ ] Validate audit trail completeness on periodic cycle');
+    lines.push(`- [${mark(checks.gRecurringEvidence)}] Execute recurring production-readiness review with archived evidence`);
+  } else {
+    lines.push(`- [ ] Implement scope items for Phase ${id}`);
+    lines.push(`- [ ] Validate exit criteria for Phase ${id}`);
+  }
   lines.push('');
 }
 
@@ -147,9 +212,13 @@ lines.push('');
 
 lines.push('## Automation Commands');
 lines.push('- `pnpm -w roadmap:sync-next:production`');
-lines.push('- `pnpm -w run:local:full`');
-lines.push('- `pnpm -w autopilot:phase-loop`');
-lines.push('- `pnpm -w autopilot:daemon:start`');
+lines.push('- `pnpm -w production:phase-a`');
+lines.push('- `pnpm -w production:phase-b`');
+lines.push('- `pnpm -w production:phase-c`');
+lines.push('- `pnpm -w production:phase-d`');
+lines.push('- `pnpm -w production:phase-e`');
+lines.push('- `pnpm -w production:phase-f`');
+lines.push('- `pnpm -w production:phase-g`');
 lines.push('');
 
 fs.writeFileSync(outPath, lines.join('\n') + '\n');

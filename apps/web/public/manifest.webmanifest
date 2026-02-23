@@ -1,0 +1,19 @@
+{
+  "name": "AsDev Creator Membership",
+  "short_name": "AsDev Membership",
+  "description": "Local-first creator membership platform for Iran.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
