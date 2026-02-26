@@ -1,7 +1,12 @@
 # Next Production Tasks (No Timeline)
 
-> Updated: 2026-02-23
+> Updated: 2026-02-26
 > Rule: production phases close only with evidence-backed exits in real/prod-like environments.
+
+## Reality Metrics (2026-02-26)
+- Weekly checklist completion: `3/15` (`20%`) | remaining: `12`
+- Production phase board completion: `8/22` (`36.4%`) | remaining: `14`
+- Global gates checklist completion: `10/10` (`100%`)
 
 ## Weekly Reality Checklist (Not Actually Closed Yet)
 - [ ] Phase A: اجرای E2E واقعی با provider بیرونی (نه callback شبیه‌سازی‌شده محلی)
@@ -78,4 +83,3 @@
 - `pnpm -w production:phase-e`
 - `pnpm -w production:phase-f`
 - `pnpm -w production:phase-g`
-

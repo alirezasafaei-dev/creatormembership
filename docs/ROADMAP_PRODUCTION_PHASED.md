@@ -8,17 +8,26 @@
 - هر تغییر باید rollback-safe باشد.
 - هیچ فاز بدون گذر از gateهای کیفیت و امنیت بسته نشود.
 
-## Current Reality Baseline (2026-02-23)
+## Current Reality Baseline (2026-02-26)
 - Evidence موجود در `.codex/production-evidence/` معتبر است، اما فعلا در سطح local/prod-sim اجرا شده و به معنی بسته‌شدن کامل production phases نیست.
 - معیار «Done» برای هر Production Phase فقط وقتی معتبر است که Exit Criteria همان فاز در محیط واقعی (یا staging مستقل معادل production) اثبات شود.
 - تا زمان تکمیل آیتم‌های باز، این سند باید به‌عنوان برنامه‌ی در حال اجرا در نظر گرفته شود، نه «برنامه‌ی کامل‌شده».
-- Evidence محلی جدیدتر (mode=all): runId `20260223-123432` با `overallOk=true`.
+- Evidence محلی جدیدتر (gates): runId `20260223-205828` با `overallOk=true` (from `docs/RUNTIME/LOCAL_STATUS.md`).
+- آخرین batch شواهد production-phase موجود در ریپو:
+  - `.codex/production-evidence/20260221-130951-phase-a`
+  - `.codex/production-evidence/20260221-131010-phase-b`
+  - `.codex/production-evidence/20260221-131729-phase-c`
+  - `.codex/production-evidence/20260221-131411-phase-d`
+  - `.codex/production-evidence/20260221-131423-phase-e`
+  - `.codex/production-evidence/20260221-131741-phase-f`
+  - `.codex/production-evidence/20260221-131758-phase-g`
 - موارد پیاده‌شده (اما هنوز معادل close کامل Production Phase C نیست):
   - CORS allowlist + preflight handling
   - CSRF block برای درخواست‌های cross-site state-changing
   - session device visibility + مدیریت سشن کاربر
-- وضعیت برد Production بعد از اجرای خودکار force-cycle:
-  - `tasks/NEXT_PRODUCTION.md` اکنون 26 آیتم باز دارد (از 37 آیتم باز قبلی کمتر شده است).
+- وضعیت برد Production (واقعی از `tasks/NEXT_PRODUCTION.md`):
+  - Weekly checklist: `3/15` done (`20%`) و `12` آیتم باز
+  - Production phase board: `8/22` done (`36.4%`) و `14` آیتم باز
 
 ## Production Phase A - Real Payment Go-Live
 هدف: آماده‌سازی درگاه واقعی در سطح Production

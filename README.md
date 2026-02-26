@@ -108,10 +108,10 @@ From `.env.example` and `apps/api/.env.example`:
 - API health evidence in reports references `GET /api/v1/health/db`
 
 ### 8) Links
-- Repo: https://github.com/alirezasafaeisystems/asdev-creator-membership-ir
-- Issues: https://github.com/alirezasafaeisystems/asdev-creator-membership-ir/issues
-- Discussions: https://github.com/alirezasafaeisystems/asdev-creator-membership-ir/discussions
+- Repo: https://github.com/parsairaniiidev/asdev-creator-membership-ir
+- Issues: https://github.com/parsairaniiidev/asdev-creator-membership-ir/issues
+- Discussions: https://github.com/parsairaniiidev/asdev-creator-membership-ir/discussions
 
 ### 9) Status & Compatibility
-- Last documentation sync: 2026-02-23
+- Last documentation sync: 2026-02-26
 - Base sync snapshot: `main`, `dirty`, `ahead 1`, `behind 0`

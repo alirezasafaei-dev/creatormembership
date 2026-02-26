@@ -1,6 +1,12 @@
 # Project Status (Reality Check)
 
-Last verified: 2026-02-23
+Last verified: 2026-02-26
+
+## Reality Metrics (2026-02-26)
+- Core roadmap phases (`tasks/NEXT.md`): `8/8` done (`100%`).
+- Production weekly checklist (`tasks/NEXT_PRODUCTION.md`): `3/15` done (`20%`), `12` remaining.
+- Production phase board (`tasks/NEXT_PRODUCTION.md`): `8/22` done (`36.4%`), `14` remaining.
+- Global production gates checklist: `10/10` done (`100%`) بر اساس latest evidence report.
 
 ## Verified Done
 - API MVP is running:
@@ -45,7 +51,8 @@ Last verified: 2026-02-23
     - `GET /api/v1/auth/sessions`
     - `DELETE /api/v1/auth/sessions/:sessionId`
 - Latest local evidence run:
-  - latest full evidence (mode=all, gates + smoke): runId `20260223-123432` (`overallOk=true`)
+  - latest gates evidence: runId `20260223-205828` (`overallOk=true`) from `docs/RUNTIME/LOCAL_STATUS.md`
+  - latest production-phase evidence batch in repo: `.codex/production-evidence/20260221-131758-phase-g`
 - Phase 4 content-protection baseline implemented:
   - content metadata + publish endpoints
   - tokenized download URL (`GET /api/v1/download/:token`)
@@ -104,12 +111,12 @@ Last verified: 2026-02-23
   - cost guardrailهای runtime/infra تعریف و enforce نشده‌اند.
 - Production Phase G (Compliance and Governance):
   - least-privilege access governance به‌صورت policy + automation قابل اثبات بسته نشده است.
-  - چرخه periodic production-readiness review هنوز evidence عملیاتی دوره‌ای ندارد.
+  - periodic review اجرا شده، اما هنوز signoff رسمی governance/owner برای بستن فاز ثبت نشده است.
 
 ## Progress Snapshot (Pragmatic)
 - Engineering baseline and delivery pipeline: strong
 - Core monetization MVP path: working with mock gateway
-- Production readiness and feature-complete scope: still in progress
+- Production readiness and feature-complete scope: still in progress (`14` آیتم باز در Phase Board + `12` آیتم باز در Weekly Checklist)
 
 Use `docs/ROADMAP_PHASED.md` as the baseline no-deadline execution plan.
 Use `docs/ROADMAP_PRODUCTION_PHASED.md` for production-grade phased execution.
