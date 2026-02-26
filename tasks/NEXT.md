@@ -1,6 +1,6 @@
 # Next Tasks (Phased, No Timeline)
 
-> Updated: 2026-02-23
+> Updated: 2026-02-26
 > Rule: this plan is phase-based and has no calendar deadline.
 
 ## Auto Baseline
@@ -72,4 +72,3 @@
 - `pnpm -w test:integration`
 - `pnpm -w test:e2e`
 - `pnpm -w smoke:mock-payment` (requires `DATABASE_URL`)
-

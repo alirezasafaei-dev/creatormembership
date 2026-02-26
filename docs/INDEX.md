@@ -65,6 +65,7 @@
 - `docs/RUNBOOKS/Production_Payment_GoLive.md`
 - `docs/RUNBOOKS/DR_Drill.md`
 - `docs/RUNTIME/LOCAL_STATUS.md`
+- `docs/RUNTIME/COMPLETION_PASS_2026-02-26.md`
 
 ## Reference and Archive
 - `docs/ANALYSIS/TECHNICAL_SPEC.md`
