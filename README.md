@@ -1,10 +1,13 @@
-# asdev-creator-membership-ir
+# creatormembership
 
 Local-first creator membership platform with governance-first delivery.
 
 ## Current Status (Verified)
-As of 2026-02-20:
-- Quality gates are green: `docs:validate`, `lint`, `typecheck`, `local-first:scan`, `test`, `build`, `test:integration`, `test:e2e`
+As of 2026-02-27:
+- Local branch synced with `https://github.com/parsairaniiidev/creatormembership`.
+- Open pull requests in upstream repo: `0` (all existing PRs were triaged and resolved/closed on 2026-02-27).
+- Recent CI checks are green on merged PRs (`lint`, `typecheck`, `test`, `quality-gates`).
+- Quality gates are green locally: `docs:validate`, `lint`, `typecheck`, `local-first:scan`, `test`, `build`, `test:integration`, `test:e2e`
 - Core flow is verified with smoke suite:
   - `signup -> creator -> plan -> checkout -> callback -> ACTIVE subscription`
 - Adapter callback signature, RBAC admin policy, and content tokenized download are verified via smoke tests.
@@ -108,10 +111,10 @@ From `.env.example` and `apps/api/.env.example`:
 - API health evidence in reports references `GET /api/v1/health/db`
 
 ### 8) Links
-- Repo: https://github.com/parsairaniiidev/asdev-creator-membership-ir
-- Issues: https://github.com/parsairaniiidev/asdev-creator-membership-ir/issues
-- Discussions: https://github.com/parsairaniiidev/asdev-creator-membership-ir/discussions
+- Repo: https://github.com/parsairaniiidev/creatormembership
+- Issues: https://github.com/parsairaniiidev/creatormembership/issues
+- Discussions: https://github.com/parsairaniiidev/creatormembership/discussions
 
 ### 9) Status & Compatibility
-- Last documentation sync: 2026-02-26
-- Base sync snapshot: `main`, `dirty`, `ahead 1`, `behind 0`
+- Last documentation sync: 2026-02-27
+- Base sync snapshot: `main`, `dirty (local .codex/config.toml)`, `ahead 0`, `behind 0`

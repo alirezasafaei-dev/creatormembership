@@ -1,12 +1,13 @@
 # Project Status (Reality Check)
 
-Last verified: 2026-02-26
+Last verified: 2026-02-27
 
-## Reality Metrics (2026-02-26)
-- Core roadmap phases (`tasks/NEXT.md`): `8/8` done (`100%`).
-- Production weekly checklist (`tasks/NEXT_PRODUCTION.md`): `4/15` done (`26.7%`), `11` remaining.
-- Production phase board (`tasks/NEXT_PRODUCTION.md`): `9/22` done (`40.9%`), `13` remaining.
-- Global production gates checklist: `10/10` done (`100%`) بر اساس latest evidence report.
+## Reality Metrics (2026-02-27)
+- Core roadmap checklist (`tasks/NEXT.md`): `40/40` done (`100%`).
+- Production roadmap checklist (`tasks/NEXT_PRODUCTION.md`): `23/50` done (`46.0%`), `27` remaining.
+- Open pull requests in upstream repo (`parsairaniiidev/creatormembership`): `0`.
+- Repository default branch: `main`.
+- Last upstream push: `2026-02-27T23:43:58Z`.
 
 ## Verified Done
 - API MVP is running:
@@ -116,7 +117,7 @@ Last verified: 2026-02-26
 ## Progress Snapshot (Pragmatic)
 - Engineering baseline and delivery pipeline: strong
 - Core monetization MVP path: working with mock gateway
-- Production readiness and feature-complete scope: still in progress (`13` آیتم باز در Phase Board + `11` آیتم باز در Weekly Checklist)
+- Production readiness and feature-complete scope: still in progress (`27` آیتم باز در `tasks/NEXT_PRODUCTION.md`)
 
 Use `docs/ROADMAP_PHASED.md` as the baseline no-deadline execution plan.
 Use `docs/ROADMAP_PRODUCTION_PHASED.md` for production-grade phased execution.
