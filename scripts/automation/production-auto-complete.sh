@@ -38,7 +38,7 @@ run_phase() {
     return 0
   fi
   echo "[PROD_AUTO] run $phase force=${PRODUCTION_AUTO_FORCE}"
-  if ! bash -lc "$cmd"; then
+  if ! eval "$cmd"; then
     echo "[PROD_AUTO] fail $phase"
     return 1
   fi
