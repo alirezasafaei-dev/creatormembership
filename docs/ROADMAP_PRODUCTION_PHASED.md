@@ -25,9 +25,10 @@
   - CORS allowlist + preflight handling
   - CSRF block برای درخواست‌های cross-site state-changing
   - session device visibility + مدیریت سشن کاربر
+  - dependency vulnerability scan/triage lifecycle automation (`security:deps:scan`, `security:deps:triage`) + evidence artifacts
 - وضعیت برد Production (واقعی از `tasks/NEXT_PRODUCTION.md`):
-  - Weekly checklist: `3/15` done (`20%`) و `12` آیتم باز
-  - Production phase board: `8/22` done (`36.4%`) و `14` آیتم باز
+  - Weekly checklist: `4/15` done (`26.7%`) و `11` آیتم باز
+  - Production phase board: `9/22` done (`40.9%`) و `13` آیتم باز
 
 ## Production Phase A - Real Payment Go-Live
 هدف: آماده‌سازی درگاه واقعی در سطح Production

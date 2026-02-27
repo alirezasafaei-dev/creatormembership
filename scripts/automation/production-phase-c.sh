@@ -23,6 +23,9 @@ if ! curl -fsS "http://127.0.0.1:4000/health" >/dev/null 2>&1; then
 fi
 
 pnpm -w security:scan | tee "$EVIDENCE_DIR/security-scan.log"
+pnpm -w security:deps:triage | tee "$EVIDENCE_DIR/security-deps-triage.log"
+cp -f .codex/security/dependency-audit/latest.json "$EVIDENCE_DIR/dependency-audit-latest.json"
+cp -f .codex/security/dependency-audit/latest-triage.md "$EVIDENCE_DIR/dependency-audit-latest-triage.md"
 API_PORT=4071 HOST=127.0.0.1 DATABASE_URL="$DATABASE_URL" pnpm -w smoke:auth-session | tee "$EVIDENCE_DIR/smoke-auth-session.log"
 API_PORT=4072 HOST=127.0.0.1 DATABASE_URL="$DATABASE_URL" pnpm -w smoke:rbac-admin | tee "$EVIDENCE_DIR/smoke-rbac.log"
 
@@ -39,6 +42,7 @@ done
   echo "completed_at: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
   echo "checks:"
   echo "- security scan passed"
+  echo "- dependency vulnerability scan + triage passed"
   echo "- auth session smoke passed"
   echo "- RBAC smoke passed"
   echo "- security headers verified"

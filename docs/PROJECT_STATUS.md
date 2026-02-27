@@ -4,8 +4,8 @@ Last verified: 2026-02-26
 
 ## Reality Metrics (2026-02-26)
 - Core roadmap phases (`tasks/NEXT.md`): `8/8` done (`100%`).
-- Production weekly checklist (`tasks/NEXT_PRODUCTION.md`): `3/15` done (`20%`), `12` remaining.
-- Production phase board (`tasks/NEXT_PRODUCTION.md`): `8/22` done (`36.4%`), `14` remaining.
+- Production weekly checklist (`tasks/NEXT_PRODUCTION.md`): `4/15` done (`26.7%`), `11` remaining.
+- Production phase board (`tasks/NEXT_PRODUCTION.md`): `9/22` done (`40.9%`), `13` remaining.
 - Global production gates checklist: `10/10` done (`100%`) بر اساس latest evidence report.
 
 ## Verified Done
@@ -44,6 +44,7 @@ Last verified: 2026-02-26
   - tighter per-route rate limits for auth and callback routes
   - session lifecycle hardening: `auth/refresh`, `auth/signout`, `auth/signout-all`
 - Production Phase C partial hardening implemented in code:
+  - dependency vulnerability workflow automation added (`security:deps:scan`, `security:deps:triage`) with evidence artifacts under `.codex/security/dependency-audit/`
   - allowlist-based CORS policy + preflight handling in API hooks
   - CSRF protection for cross-site mutating requests
   - session device visibility (`user_agent`, `ip_address`, `last_seen_at`)
@@ -97,7 +98,6 @@ Last verified: 2026-02-26
   - سیاست backup افزایشی (incremental) و retention policy در اسکریپت‌ها پیاده نشده است.
   - سند تاییدشده RPO/RTO و گزارش DR drill روی محیط staging/prod-sim مستقل ثبت نشده است.
 - Production Phase C (Security Hardening):
-  - dependency vulnerability workflow واقعی (scan/triage/fix/evidence) هنوز ثبت و enforce نشده است.
   - hardening پیشرفته CSRF (double-submit token/nonce برای فرم‌های مرورگرمحور) هنوز اضافه نشده است.
   - anomaly detection برای session abuse (rules + alerts) هنوز پیاده نشده است.
 - Production Phase D (Observability and SRE):
@@ -116,7 +116,7 @@ Last verified: 2026-02-26
 ## Progress Snapshot (Pragmatic)
 - Engineering baseline and delivery pipeline: strong
 - Core monetization MVP path: working with mock gateway
-- Production readiness and feature-complete scope: still in progress (`14` آیتم باز در Phase Board + `12` آیتم باز در Weekly Checklist)
+- Production readiness and feature-complete scope: still in progress (`13` آیتم باز در Phase Board + `11` آیتم باز در Weekly Checklist)
 
 Use `docs/ROADMAP_PHASED.md` as the baseline no-deadline execution plan.
 Use `docs/ROADMAP_PRODUCTION_PHASED.md` for production-grade phased execution.

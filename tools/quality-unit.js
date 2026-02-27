@@ -15,6 +15,7 @@ function run(cmd, args) {
 
 run('node', ['tools/docs-validator/validate.js']);
 run('node', ['tools/security/validate-sensitive-policies.js']);
+run('node', ['--test', 'tools/security/dependency-vulnerability-scan.test.js']);
 
 const requiredFiles = [
   'tools/phase-runner/run.sh',
