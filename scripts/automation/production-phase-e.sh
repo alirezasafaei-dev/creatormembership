@@ -26,9 +26,13 @@ marker="release-rollback-$(date +%s)-$RANDOM"
   echo "marker: $marker"
 } > "$EVIDENCE_DIR/summary.md"
 
+if ! curl -fsS "http://127.0.0.1:4000/api/v1/health/db" >/dev/null 2>&1 || ! curl -fsS "http://127.0.0.1:3000/" >/dev/null 2>&1; then
+  DATABASE_URL="$DATABASE_URL" pnpm -w local:stack:start | tee "$EVIDENCE_DIR/local-stack-start.log"
+fi
+
 pnpm -w release:rollback:validate | tee "$EVIDENCE_DIR/rollback-contract.log"
 pnpm -w release:rc:gates | tee "$EVIDENCE_DIR/rc-gates.log"
-API_URL="http://127.0.0.1:4000" WEB_URL="http://127.0.0.1:3000" pnpm -w release:go-no-go:evidence | tee "$EVIDENCE_DIR/go-no-go.log"
+API_URL="http://127.0.0.1:4000" WEB_URL="http://127.0.0.1:3000" REQUIRE_WEB_HEALTH=1 pnpm -w release:go-no-go:evidence | tee "$EVIDENCE_DIR/go-no-go.log"
 
 pnpm -w build | tee "$EVIDENCE_DIR/build.log"
 bash scripts/automation/db-backup.sh | tee "$EVIDENCE_DIR/backup.log"
@@ -56,15 +60,19 @@ fi
 
 pnpm -w smoke:all | tee "$EVIDENCE_DIR/smoke-all.log"
 
-latest_rc_report="$(ls -1t docs/release/reports/rc-gates-*.json 2>/dev/null | head -n1 || true)"
-latest_go_no_go="$(ls -1t docs/release/reports/go-no-go-*.md 2>/dev/null | head -n1 || true)"
+latest_rc_report="$(find docs/release/reports -maxdepth 1 -type f -name 'rc-gates-*.json' ! -name 'rc-gates-latest.json' -print 2>/dev/null | sort | tail -n1 || true)"
+latest_go_no_go="$(find docs/release/reports -maxdepth 1 -type f -name 'go-no-go-*.md' ! -name 'go-no-go-latest.md' -print 2>/dev/null | sort | tail -n1 || true)"
 if [[ -n "$latest_rc_report" ]]; then
   cp -f "$latest_rc_report" "$EVIDENCE_DIR/rc-gates-report.json"
-  cp -f "$latest_rc_report" "docs/release/reports/rc-gates-latest.json"
+  if [[ "$latest_rc_report" != "docs/release/reports/rc-gates-latest.json" ]]; then
+    cp -f "$latest_rc_report" "docs/release/reports/rc-gates-latest.json"
+  fi
 fi
 if [[ -n "$latest_go_no_go" ]]; then
   cp -f "$latest_go_no_go" "$EVIDENCE_DIR/go-no-go-report.md"
-  cp -f "$latest_go_no_go" "docs/release/reports/go-no-go-latest.md"
+  if [[ "$latest_go_no_go" != "docs/release/reports/go-no-go-latest.md" ]]; then
+    cp -f "$latest_go_no_go" "docs/release/reports/go-no-go-latest.md"
+  fi
 fi
 
 {

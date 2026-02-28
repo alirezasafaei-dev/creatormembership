@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 release:go-no-go:evidence /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/release/generate-go-no-go-evidence.sh
+
+GO_NO_GO_EVIDENCE_OK report=docs/release/reports/go-no-go-20260228T035902Z.md decision=GO

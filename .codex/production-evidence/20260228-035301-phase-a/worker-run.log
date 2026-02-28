@@ -1,0 +1,5 @@
+
+> @asdev/api@0.0.0 worker:start /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api
+> node dist/worker.js
+
+ ELIFECYCLE  Command failed.

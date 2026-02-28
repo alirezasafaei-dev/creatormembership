@@ -30,8 +30,16 @@ API_PORT=4071 HOST=127.0.0.1 DATABASE_URL="$DATABASE_URL" pnpm -w smoke:auth-ses
 API_PORT=4072 HOST=127.0.0.1 DATABASE_URL="$DATABASE_URL" pnpm -w smoke:rbac-admin | tee "$EVIDENCE_DIR/smoke-rbac.log"
 
 curl -si "http://127.0.0.1:4000/health" > "$EVIDENCE_DIR/health-headers.txt"
+has_header() {
+  local header="$1"
+  if command -v rg >/dev/null 2>&1; then
+    rg -qi "^${header}:" "$EVIDENCE_DIR/health-headers.txt"
+  else
+    grep -qi "^${header}:" "$EVIDENCE_DIR/health-headers.txt"
+  fi
+}
 for header in "X-Content-Type-Options" "X-Frame-Options" "Referrer-Policy" "Permissions-Policy"; do
-  if ! rg -qi "^${header}:" "$EVIDENCE_DIR/health-headers.txt"; then
+  if ! has_header "$header"; then
     echo "ERROR: missing security header $header" >&2
     exit 1
   fi

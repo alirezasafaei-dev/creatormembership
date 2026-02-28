@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 perf:check /home/dev/Project_Me_All/Project_Me/creatormembership
+> node tools/quality-performance.js
+
+PERF_OK static_bytes=578826 limit=2800000 files=13

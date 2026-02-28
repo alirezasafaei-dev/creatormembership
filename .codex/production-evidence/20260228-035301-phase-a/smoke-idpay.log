@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 smoke:idpay-callback /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-idpay-callback.sh
+
+SMOKE_IDPAY_OK payment=dca130a9-80a1-4c04-af3d-03e3f199c7b6 gateway_ref=idpay_dca130a9-80a1-4c04-af3d-03e3f199c7b6

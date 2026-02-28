@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 smoke:rbac-admin /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-rbac-admin.sh
+
+SMOKE_RBAC_OK user=97a8afa0-72f6-4909-9667-833a9bcc81cc

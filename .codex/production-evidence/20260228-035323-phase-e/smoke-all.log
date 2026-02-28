@@ -1,0 +1,32 @@
+
+> asdev-creator-membership-ir@0.1.0 smoke:all /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-all.sh
+
+waiting for server to start.... done
+server started
+
+> asdev-creator-membership-ir@0.1.0 smoke:mock-payment /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-mock-payment.sh
+
+SMOKE_OK user=125ecd8a-f7c7-40d0-860b-f96bc3a8ddbf creator=87001035-927b-4b51-80eb-d8ccdd6d7287 plan=3c933999-c298-4d7e-b141-719960ff2ed8 payment=750ffccb-3f67-4f84-a5b4-312ad3e7ff85 subscription=a2d90475-677d-46cb-b666-960d383900e7
+
+> asdev-creator-membership-ir@0.1.0 smoke:idpay-callback /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-idpay-callback.sh
+
+SMOKE_IDPAY_OK payment=0a474582-4f04-4617-b19e-eabfacdaceec gateway_ref=idpay_0a474582-4f04-4617-b19e-eabfacdaceec
+
+> asdev-creator-membership-ir@0.1.0 smoke:rbac-admin /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-rbac-admin.sh
+
+SMOKE_RBAC_OK user=b68dc184-c8f5-4ba6-afb7-ff0fbabc09f6
+
+> asdev-creator-membership-ir@0.1.0 smoke:content-download /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-content-download.sh
+
+SMOKE_CONTENT_OK content=cd056809-bc5c-4221-b86b-f57eac545d3c
+
+> asdev-creator-membership-ir@0.1.0 smoke:auth-session /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-auth-session.sh
+
+SMOKE_AUTH_SESSION_OK
+SMOKE_ALL_OK

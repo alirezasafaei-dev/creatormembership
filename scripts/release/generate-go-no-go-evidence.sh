@@ -7,6 +7,7 @@ cd "$ROOT_DIR"
 API_URL="${API_URL:-http://127.0.0.1:4000}"
 WEB_URL="${WEB_URL:-http://127.0.0.1:3000}"
 OUT_DIR="${OUT_DIR:-docs/release/reports}"
+REQUIRE_WEB_HEALTH="${REQUIRE_WEB_HEALTH:-0}"
 
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$OUT_DIR"
@@ -38,7 +39,12 @@ api_health="$(curl -fsS -o /dev/null -w "%{http_code}" "${API_URL%/}/api/v1/heal
 web_health="$(curl -fsS -o /dev/null -w "%{http_code}" "${WEB_URL%/}/" || true)"
 
 decision="NO-GO"
-if [[ "$docs_ec" == "0" && "$lint_ec" == "0" && "$typecheck_ec" == "0" && "$test_ec" == "0" && "$build_ec" == "0" && "$smoke_ec" == "0" && "$api_health" == "200" ]]; then
+web_gate_ok=1
+if [[ "$REQUIRE_WEB_HEALTH" == "1" && "$web_health" != "200" ]]; then
+  web_gate_ok=0
+fi
+
+if [[ "$docs_ec" == "0" && "$lint_ec" == "0" && "$typecheck_ec" == "0" && "$test_ec" == "0" && "$build_ec" == "0" && "$smoke_ec" == "0" && "$api_health" == "200" && "$web_gate_ok" == "1" ]]; then
   decision="GO"
 fi
 
@@ -50,6 +56,7 @@ cat > "$REPORT_FILE" <<REPORT
 - Branch: $(git rev-parse --abbrev-ref HEAD)
 - API URL: ${API_URL}
 - WEB URL: ${WEB_URL}
+- Require WEB health: ${REQUIRE_WEB_HEALTH}
 
 ## Gate Results
 - docs:validate: ${docs_ec}

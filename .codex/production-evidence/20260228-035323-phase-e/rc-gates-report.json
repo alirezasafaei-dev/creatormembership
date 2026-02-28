@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-28T03:59:01.991Z",
+  "generatedAt": "2026-02-28T03:53:44.772Z",
   "tier": "extended",
   "overallStatus": "passed",
   "steps": [
@@ -19,7 +19,7 @@
       "status": "passed",
       "tier": "core",
       "blocking": true,
-      "durationMs": 556,
+      "durationMs": 539,
       "output": "> asdev-creator-membership-ir@0.1.0 lint /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-lint.js\n\nQUALITY_LINT_OK sh=48 js=15"
     },
     {
@@ -28,7 +28,7 @@
       "status": "passed",
       "tier": "core",
       "blocking": true,
-      "durationMs": 172,
+      "durationMs": 170,
       "output": "> asdev-creator-membership-ir@0.1.0 typecheck /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-typecheck.js\n\nQUALITY_TYPECHECK_OK phases=5"
     },
     {
@@ -37,7 +37,7 @@
       "status": "passed",
       "tier": "core",
       "blocking": true,
-      "durationMs": 290,
+      "durationMs": 289,
       "output": "> asdev-creator-membership-ir@0.1.0 test /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-unit.js\n\nQUALITY_UNIT_OK"
     },
     {
@@ -46,8 +46,8 @@
       "status": "passed",
       "tier": "core",
       "blocking": true,
-      "durationMs": 6959,
-      "output": "> asdev-creator-membership-ir@0.1.0 build /home/dev/Project_Me_All/Project_Me/creatormembership\n> pnpm -C apps/api build && pnpm -C apps/web build\n\n\n> @asdev/api@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api\n> tsc -p tsconfig.json\n\n\n> @asdev/web@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/web\n> next build\n\n▲ Next.js 16.1.6 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1726.0ms\n  Running TypeScript ...\n  Collecting page data using 11 workers ...\n  Generating static pages using 11 workers (0/9) ...\n  Generating static pages using 11 workers (2/9) \r\n  Generating static pages using 11 workers (4/9) \r\n  Generating static pages using 11 workers (6/9) \r\n✓ Generating static pages using 11 workers (9/9) in 192.4ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ○ /about\n├ ○ /admin/ops\n├ ƒ /creators\n├ ƒ /creators/[slug]\n├ ○ /how-it-works\n├ ○ /pricing\n├ ○ /privacy\n├ ○ /robots.txt\n└ ƒ /sitemap.xml\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand"
+      "durationMs": 6984,
+      "output": "> asdev-creator-membership-ir@0.1.0 build /home/dev/Project_Me_All/Project_Me/creatormembership\n> pnpm -C apps/api build && pnpm -C apps/web build\n\n\n> @asdev/api@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api\n> tsc -p tsconfig.json\n\n\n> @asdev/web@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/web\n> next build\n\n▲ Next.js 16.1.6 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1688.4ms\n  Running TypeScript ...\n  Collecting page data using 11 workers ...\n  Generating static pages using 11 workers (0/9) ...\n  Generating static pages using 11 workers (2/9) \r\n  Generating static pages using 11 workers (4/9) \r\n  Generating static pages using 11 workers (6/9) \r\n✓ Generating static pages using 11 workers (9/9) in 190.5ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ○ /about\n├ ○ /admin/ops\n├ ƒ /creators\n├ ƒ /creators/[slug]\n├ ○ /how-it-works\n├ ○ /pricing\n├ ○ /privacy\n├ ○ /robots.txt\n└ ƒ /sitemap.xml\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand"
     },
     {
       "id": "rc_smoke_all",
@@ -55,8 +55,8 @@
       "status": "passed",
       "tier": "core",
       "blocking": true,
-      "durationMs": 9748,
-      "output": "> asdev-creator-membership-ir@0.1.0 smoke:all /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-all.sh\n\nwaiting for server to start.... done\nserver started\n\n> asdev-creator-membership-ir@0.1.0 smoke:mock-payment /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-mock-payment.sh\n\nSMOKE_OK user=e9cb6786-40c1-49fc-9181-7085baa1ae30 creator=4643f1af-0099-49a0-82ae-59072f0c5c70 plan=5952667e-562e-478f-88d0-e6198c347e7b payment=0f6e42f6-b6fe-4537-a1b0-27a9c2fe3d58 subscription=cc9ac584-cce8-43f0-b003-525e1945027f\n\n> asdev-creator-membership-ir@0.1.0 smoke:idpay-callback /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-idpay-callback.sh\n\nSMOKE_IDPAY_OK payment=f20ba10e-f402-4f00-88c2-9474d7eecddc gateway_ref=idpay_f20ba10e-f402-4f00-88c2-9474d7eecddc\n\n> asdev-creator-membership-ir@0.1.0 smoke:rbac-admin /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-rbac-admin.sh\n\nSMOKE_RBAC_OK user=e2a7dd9d-678b-494f-a76a-250605f3c17f\n\n> asdev-creator-membership-ir@0.1.0 smoke:content-download /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-content-download.sh\n\nSMOKE_CONTENT_OK content=16a2acc6-14d7-4b8f-ac54-b98804625689\n\n> asdev-creator-membership-ir@0.1.0 smoke:auth-session /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-auth-session.sh\n\nSMOKE_AUTH_SESSION_OK\nSMOKE_ALL_OK"
+      "durationMs": 9756,
+      "output": "> asdev-creator-membership-ir@0.1.0 smoke:all /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-all.sh\n\nwaiting for server to start.... done\nserver started\n\n> asdev-creator-membership-ir@0.1.0 smoke:mock-payment /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-mock-payment.sh\n\nSMOKE_OK user=8ec11973-8811-408a-a1d9-238d80d066ab creator=397b6aea-6b48-4cfa-b7e0-a03baefa86d1 plan=c0f63a10-c91d-4d80-95ce-2d8da046aef6 payment=557a7fb1-81f9-4d17-81b5-3db1612f43dd subscription=0cc1cbba-2300-46d5-855b-8ce1fe3e79d3\n\n> asdev-creator-membership-ir@0.1.0 smoke:idpay-callback /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-idpay-callback.sh\n\nSMOKE_IDPAY_OK payment=c46803b1-efe2-4647-95e3-a00341eb5da5 gateway_ref=idpay_c46803b1-efe2-4647-95e3-a00341eb5da5\n\n> asdev-creator-membership-ir@0.1.0 smoke:rbac-admin /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-rbac-admin.sh\n\nSMOKE_RBAC_OK user=bf82a224-bbb0-4893-9d6d-9c2c4ee23774\n\n> asdev-creator-membership-ir@0.1.0 smoke:content-download /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-content-download.sh\n\nSMOKE_CONTENT_OK content=1f1b2099-95f3-4b1c-9fea-3dccc79313ed\n\n> asdev-creator-membership-ir@0.1.0 smoke:auth-session /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-auth-session.sh\n\nSMOKE_AUTH_SESSION_OK\nSMOKE_ALL_OK"
     },
     {
       "id": "rc_security_scan",
@@ -64,7 +64,7 @@
       "status": "passed",
       "tier": "extended",
       "blocking": true,
-      "durationMs": 184,
+      "durationMs": 187,
       "output": "> asdev-creator-membership-ir@0.1.0 security:scan /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash -lc 'if rg -n \"(ghp_[A-Za-z0-9]{20,}|sk_live_[A-Za-z0-9]+|-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16})\" -S . --glob \"!**/.git/**\" --glob \"!**/node_modules/**\"; then echo SECRET_PATTERN_DETECTED; exit 1; else echo SECURITY_SCAN_OK; fi' && node tools/security/validate-sensitive-policies.js\n\nSECURITY_SCAN_OK\nSENSITIVE_POLICY_VALIDATE_OK"
     },
     {
@@ -73,7 +73,7 @@
       "status": "passed",
       "tier": "extended",
       "blocking": true,
-      "durationMs": 171,
+      "durationMs": 168,
       "output": "> asdev-creator-membership-ir@0.1.0 contracts:check /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/contracts-check.js\n\nCONTRACTS_OK"
     },
     {
@@ -82,7 +82,7 @@
       "status": "passed",
       "tier": "extended",
       "blocking": true,
-      "durationMs": 171,
+      "durationMs": 168,
       "output": "> asdev-creator-membership-ir@0.1.0 perf:check /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-performance.js\n\nPERF_OK static_bytes=578826 limit=2800000 files=13"
     },
     {
@@ -91,7 +91,7 @@
       "status": "passed",
       "tier": "extended",
       "blocking": true,
-      "durationMs": 2194,
+      "durationMs": 2156,
       "output": "> asdev-creator-membership-ir@0.1.0 test:regression /home/dev/Project_Me_All/Project_Me/creatormembership\n> pnpm -w test:integration && pnpm -w test:e2e\n\n\n> asdev-creator-membership-ir@0.1.0 test:integration /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-integration.js\n\nQUALITY_INTEGRATION_OK phases=5\n\n> asdev-creator-membership-ir@0.1.0 test:e2e /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-e2e.js\n\nQUALITY_E2E_OK"
     }
   ],

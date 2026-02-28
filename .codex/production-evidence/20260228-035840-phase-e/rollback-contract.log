@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 release:rollback:validate /home/dev/Project_Me_All/Project_Me/creatormembership
+> node scripts/release/validate-rollback-drill.mjs
+
+[release] rollback drill contract valid (3 drills)

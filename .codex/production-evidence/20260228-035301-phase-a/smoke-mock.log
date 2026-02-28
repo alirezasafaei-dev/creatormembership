@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 smoke:mock-payment /home/dev/Project_Me_All/Project_Me/creatormembership
+> bash scripts/automation/smoke-mock-payment.sh
+
+SMOKE_OK user=6bc3836a-4765-45d4-bacf-5ff186702326 creator=9552e4f1-a19f-45de-9ab5-ab6855e1ee5c plan=82ae78d1-da6d-425d-992e-f8b4b3e131d3 payment=ee3d877c-0caf-4426-9169-44bcf7f87c0f subscription=1fcf3eb3-1649-4d89-b900-f0ee14e24f9d

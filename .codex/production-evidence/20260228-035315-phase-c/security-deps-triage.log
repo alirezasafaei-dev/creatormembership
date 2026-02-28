@@ -1,0 +1,9 @@
+
+> asdev-creator-membership-ir@0.1.0 security:deps:triage /home/dev/Project_Me_All/Project_Me/creatormembership
+> pnpm -w security:deps:scan
+
+
+> asdev-creator-membership-ir@0.1.0 security:deps:scan /home/dev/Project_Me_All/Project_Me/creatormembership
+> node tools/security/dependency-vulnerability-scan.js
+
+DEPENDENCY_AUDIT_OK total=0 report=/home/dev/Project_Me_All/Project_Me/creatormembership/.codex/security/dependency-audit/latest.json

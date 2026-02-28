@@ -1,0 +1,30 @@
+
+> asdev-creator-membership-ir@0.1.0 jobs:enqueue:ops /home/dev/Project_Me_All/Project_Me/creatormembership
+> pnpm -C apps/api build && pnpm -C apps/api jobs:enqueue:ops
+
+
+> @asdev/api@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api
+> tsc -p tsconfig.json
+
+
+> @asdev/api@0.0.0 jobs:enqueue:ops /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api
+> node dist/jobs-enqueue-ops.js
+
+{
+  "ok": true,
+  "count": 3,
+  "jobs": [
+    {
+      "id": "3adb2dca-7da6-4e8f-80b4-c4455afd2331",
+      "type": "MEMBERSHIP_PAYMENT_RECONCILE"
+    },
+    {
+      "id": "e30379f3-c7e2-4fcb-a41f-ba7e8f08eb8f",
+      "type": "MEMBERSHIP_SUBSCRIPTION_EXPIRE"
+    },
+    {
+      "id": "86549687-e1aa-474a-8d7a-8e3c937e7531",
+      "type": "MEMBERSHIP_DOWNLOAD_TOKEN_CLEANUP"
+    }
+  ]
+}

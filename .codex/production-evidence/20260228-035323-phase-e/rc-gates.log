@@ -1,0 +1,5 @@
+
+> asdev-creator-membership-ir@0.1.0 release:rc:gates /home/dev/Project_Me_All/Project_Me/creatormembership
+> node scripts/release/run-rc-gates.mjs --tier=extended
+
+[release] rc gates run completed: rc-gates-2026-02-28T03-53-44-772Z.json
