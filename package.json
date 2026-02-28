@@ -73,6 +73,7 @@
     "production:auto:complete": "bash scripts/automation/production-auto-complete.sh",
     "release:rollback:validate": "node scripts/release/validate-rollback-drill.mjs",
     "release:rc:gates": "node scripts/release/run-rc-gates.mjs --tier=extended",
+    "deploy:prepare": "bash scripts/release/prepare-deploy.sh",
     "release:go-no-go:evidence": "bash scripts/release/generate-go-no-go-evidence.sh",
     "security:deps:scan": "node tools/security/dependency-vulnerability-scan.js",
     "security:deps:triage": "pnpm -w security:deps:scan"
