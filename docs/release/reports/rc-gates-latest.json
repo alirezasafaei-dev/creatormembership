@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "generatedAt": "2026-02-28T00:31:35.223Z",
+  "tier": "extended",
+  "overallStatus": "passed",
+  "steps": [
+    {
+      "id": "rc_docs_validate",
+      "command": "pnpm -w docs:validate",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 171,
+      "output": "> asdev-creator-membership-ir@0.1.0 docs:validate /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/docs-validator/validate.js\n\nDOCS_VALIDATE_OK"
+    },
+    {
+      "id": "rc_lint",
+      "command": "pnpm -w lint",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 540,
+      "output": "> asdev-creator-membership-ir@0.1.0 lint /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-lint.js\n\nQUALITY_LINT_OK sh=48 js=15"
+    },
+    {
+      "id": "rc_typecheck",
+      "command": "pnpm -w typecheck",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 176,
+      "output": "> asdev-creator-membership-ir@0.1.0 typecheck /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-typecheck.js\n\nQUALITY_TYPECHECK_OK phases=5"
+    },
+    {
+      "id": "rc_test",
+      "command": "pnpm -w test",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 298,
+      "output": "> asdev-creator-membership-ir@0.1.0 test /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-unit.js\n\nQUALITY_UNIT_OK"
+    },
+    {
+      "id": "rc_build",
+      "command": "pnpm -w build",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 6920,
+      "output": "> asdev-creator-membership-ir@0.1.0 build /home/dev/Project_Me_All/Project_Me/creatormembership\n> pnpm -C apps/api build && pnpm -C apps/web build\n\n\n> @asdev/api@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/api\n> tsc -p tsconfig.json\n\n\n> @asdev/web@0.0.0 build /home/dev/Project_Me_All/Project_Me/creatormembership/apps/web\n> next build\n\n▲ Next.js 16.1.6 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1735.3ms\n  Running TypeScript ...\n  Collecting page data using 11 workers ...\n  Generating static pages using 11 workers (0/9) ...\n  Generating static pages using 11 workers (2/9) \r\n  Generating static pages using 11 workers (4/9) \r\n  Generating static pages using 11 workers (6/9) \r\n✓ Generating static pages using 11 workers (9/9) in 189.6ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ○ /about\n├ ○ /admin/ops\n├ ƒ /creators\n├ ƒ /creators/[slug]\n├ ○ /how-it-works\n├ ○ /pricing\n├ ○ /privacy\n├ ○ /robots.txt\n└ ƒ /sitemap.xml\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand"
+    },
+    {
+      "id": "rc_smoke_all",
+      "command": "pnpm -w smoke:all",
+      "status": "passed",
+      "tier": "core",
+      "blocking": true,
+      "durationMs": 9673,
+      "output": "> asdev-creator-membership-ir@0.1.0 smoke:all /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-all.sh\n\nwaiting for server to start.... done\nserver started\n\n> asdev-creator-membership-ir@0.1.0 smoke:mock-payment /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-mock-payment.sh\n\nSMOKE_OK user=3657c3d8-f101-4491-90b9-c9a677e3f6b2 creator=5672a6b5-b89c-4a59-aaf8-1b66dfd2b785 plan=56b2be0a-afc0-4ac4-8322-e3990b808051 payment=09c4e097-2142-495d-b6d1-5c0fef165d2c subscription=abb87282-2d70-4f30-9610-a4aec1f4c7a2\n\n> asdev-creator-membership-ir@0.1.0 smoke:idpay-callback /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-idpay-callback.sh\n\nSMOKE_IDPAY_OK payment=81a395b3-7b77-49e0-89e1-36da10a1d969 gateway_ref=idpay_81a395b3-7b77-49e0-89e1-36da10a1d969\n\n> asdev-creator-membership-ir@0.1.0 smoke:rbac-admin /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-rbac-admin.sh\n\nSMOKE_RBAC_OK user=08137c0d-e576-4e92-838f-c3647d89d9ae\n\n> asdev-creator-membership-ir@0.1.0 smoke:content-download /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-content-download.sh\n\nSMOKE_CONTENT_OK content=8eff724b-ba99-4471-bdd2-cd065639b1b9\n\n> asdev-creator-membership-ir@0.1.0 smoke:auth-session /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash scripts/automation/smoke-auth-session.sh\n\nSMOKE_AUTH_SESSION_OK\nSMOKE_ALL_OK"
+    },
+    {
+      "id": "rc_security_scan",
+      "command": "pnpm -w security:scan",
+      "status": "passed",
+      "tier": "extended",
+      "blocking": true,
+      "durationMs": 180,
+      "output": "> asdev-creator-membership-ir@0.1.0 security:scan /home/dev/Project_Me_All/Project_Me/creatormembership\n> bash -lc 'if rg -n \"(ghp_[A-Za-z0-9]{20,}|sk_live_[A-Za-z0-9]+|-----BEGIN [A-Z ]*PRIVATE KEY-----|AKIA[0-9A-Z]{16})\" -S . --glob \"!**/.git/**\" --glob \"!**/node_modules/**\"; then echo SECRET_PATTERN_DETECTED; exit 1; else echo SECURITY_SCAN_OK; fi' && node tools/security/validate-sensitive-policies.js\n\nSECURITY_SCAN_OK\nSENSITIVE_POLICY_VALIDATE_OK"
+    },
+    {
+      "id": "rc_contracts",
+      "command": "pnpm -w contracts:check",
+      "status": "passed",
+      "tier": "extended",
+      "blocking": true,
+      "durationMs": 171,
+      "output": "> asdev-creator-membership-ir@0.1.0 contracts:check /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/contracts-check.js\n\nCONTRACTS_OK"
+    },
+    {
+      "id": "rc_perf",
+      "command": "pnpm -w perf:check",
+      "status": "passed",
+      "tier": "extended",
+      "blocking": true,
+      "durationMs": 171,
+      "output": "> asdev-creator-membership-ir@0.1.0 perf:check /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-performance.js\n\nPERF_OK static_bytes=578826 limit=2800000 files=13"
+    },
+    {
+      "id": "rc_regression",
+      "command": "pnpm -w test:regression",
+      "status": "passed",
+      "tier": "extended",
+      "blocking": true,
+      "durationMs": 5721,
+      "output": "> asdev-creator-membership-ir@0.1.0 test:regression /home/dev/Project_Me_All/Project_Me/creatormembership\n> pnpm -w test:integration && pnpm -w test:e2e\n\n\n> asdev-creator-membership-ir@0.1.0 test:integration /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-integration.js\n\nQUALITY_INTEGRATION_OK phases=5\n\n> asdev-creator-membership-ir@0.1.0 test:e2e /home/dev/Project_Me_All/Project_Me/creatormembership\n> node tools/quality-e2e.js\n\nQUALITY_E2E_OK"
+    }
+  ],
+  "releaseRecommendation": "proceed"
+}

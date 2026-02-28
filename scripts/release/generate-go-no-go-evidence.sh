@@ -14,6 +14,7 @@ mkdir -p artifacts
 
 BASENAME="go-no-go-${TIMESTAMP}"
 REPORT_FILE="$OUT_DIR/${BASENAME}.md"
+LATEST_FILE="$OUT_DIR/go-no-go-latest.md"
 
 run_and_capture() {
   local label="$1"
@@ -74,4 +75,5 @@ cat > "$REPORT_FILE" <<REPORT
 - Suggested decision: **${decision}**
 REPORT
 
+cp "$REPORT_FILE" "$LATEST_FILE"
 echo "GO_NO_GO_EVIDENCE_OK report=${REPORT_FILE} decision=${decision}"
