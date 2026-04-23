@@ -11,7 +11,7 @@
     "jobs:enqueue:ops": "node dist/jobs-enqueue-ops.js"
   },
   "dependencies": {
-    "fastify": "^5.7.4",
+    "fastify": "^5.8.5",
     "pg": "^8.19.0"
   },
   "devDependencies": {
