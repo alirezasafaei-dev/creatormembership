@@ -1,120 +1,173 @@
-# creatormembership
+# CreatorMembership
 
-Local-first creator membership platform with governance-first delivery.
+Local-first creator membership platform for gated digital products, access control, and production-minded delivery.
 
-## Current Status (Verified)
-As of 2026-02-27:
-- Local branch synced with `https://github.com/parsairaniiidev/creatormembership`.
-- Open pull requests in upstream repo: `0` (all existing PRs were triaged and resolved/closed on 2026-02-27).
-- Recent CI checks are green on merged PRs (`lint`, `typecheck`, `test`, `quality-gates`).
-- Quality gates are green locally: `docs:validate`, `lint`, `typecheck`, `local-first:scan`, `test`, `build`, `test:integration`, `test:e2e`
-- Core flow is verified with smoke suite:
-  - `signup -> creator -> plan -> checkout -> callback -> ACTIVE subscription`
-- Adapter callback signature, RBAC admin policy, and content tokenized download are verified via smoke tests.
-- Phased backlog is tracked without timeline and auto-synced from roadmap.
+## What This Project Is
 
-See:
+`creatormembership` is a monorepo for creators who need a practical way to sell access, manage members, and deliver protected content without relying too heavily on fragile external systems.
+
+It is built around a simple product direction:
+
+- creators need ownership
+- buyers need a smooth access flow
+- operators need release confidence
+- the system needs to stay usable under local constraints
+
+## Product Intent
+
+This repository is not just a UI demo.
+
+It is designed to support a real end-to-end membership flow:
+
+- signup
+- creator onboarding
+- plan setup
+- checkout and callback handling
+- active subscription state
+- gated content access
+
+## Why It Matters
+
+Many creator tools are dependency-heavy, expensive, or not resilient enough for constrained environments.
+
+This project focuses on:
+
+- local-first delivery
+- controlled infrastructure
+- governance-aware release flow
+- practical monetization for creators
+
+## Portfolio Value
+
+This repository demonstrates:
+
+- product and platform thinking
+- monorepo delivery across API and web
+- operational scripting and release readiness
+- access control, payment flow, and membership lifecycle design
+
+## Current Status
+
+Verified locally as documented in project status:
+
+- core flow has been validated through smoke coverage
+- quality gates are green in the documented workflow
+- phased backlog is maintained and automation-backed
+
+Relevant references:
+
 - `docs/PROJECT_STATUS.md`
 - `docs/ROADMAP_PHASED.md`
 
-## Quick Start (Local)
-Prereqs:
+## Stack
+
+- pnpm workspace monorepo
+- `apps/web`: Next.js, React, TypeScript
+- `apps/api`: Fastify, TypeScript
+- PostgreSQL-backed application flows
+- release, smoke, and governance scripts at repo root
+
+## Quick Start
+
+### Prerequisites
+
 - Node.js 20+
 - `pnpm`
-- PostgreSQL (local or remote)
+- PostgreSQL
 
-Install:
-- `pnpm install`
+### Install
 
-Run API:
-- set `DATABASE_URL` (see `.env.example` or `apps/api/.env.example`)
-- `pnpm api:dev`
-
-Run Web:
-- `pnpm dev`
-
-No Docker requirement:
-- `DATABASE_URL=... pnpm -w local:stack:start`
-- `pnpm -w local:stack:status`
-- `pnpm -w local:stack:stop`
-- Optional host reverse proxy (nginx installed locally):
-- `pnpm -w local:proxy:start`
-- `pnpm -w local:proxy:status`
-- `pnpm -w local:proxy:stop`
-- Full local automation (stack + proxy + seed + evidence):
-- `pnpm -w run:local:full`
-
-Quality gates:
-- `pnpm -w docs:validate && pnpm -w lint && pnpm -w typecheck && pnpm -w local-first:scan && pnpm -w test && pnpm -w build`
-
-Smoke test (mock payment):
-- requires `DATABASE_URL`
-- `pnpm -w smoke:mock-payment`
-
-## Documentation Sync (2026-02-23)
-
-Summary (FA): این ریپو یک پلتفرم عضویت با معماری local-first و زنجیرهٔ governance/release خودکار است.
-
-### 1) Overview
-Monorepo for creator membership platform with web, API, worker, and phased release automation.
-
-### 2) Stack & Architecture
-- pnpm workspace monorepo (`pnpm-workspace.yaml`)
-- `apps/web`: Next.js + React + TypeScript
-- `apps/api`: Fastify + TypeScript
-- PostgreSQL-backed flows with `DATABASE_URL`
-- Automated release, smoke, and governance scripts from root `package.json`
-
-### 3) Prerequisites
-- Node.js
-- pnpm `9.12.0`
-- PostgreSQL accessible for API and smoke flows
-
-### 4) Install & Run
 ```bash
 pnpm install
+```
+
+### Run API
+
+Set `DATABASE_URL`, then:
+
+```bash
 pnpm api:dev
+```
+
+### Run Web
+
+```bash
 pnpm dev
 ```
-Local-first stack and proxy:
+
+### Local-first stack helpers
+
 ```bash
 pnpm local:stack:start
+pnpm local:stack:status
+pnpm local:stack:stop
+```
+
+Optional local proxy helpers:
+
+```bash
 pnpm local:proxy:start
+pnpm local:proxy:status
+pnpm local:proxy:stop
+```
+
+Full local automation:
+
+```bash
 pnpm run:local:full
 ```
 
-### 5) Tests & Quality
+## Quality and Verification
+
+Core quality path:
+
 ```bash
 pnpm docs:validate
 pnpm lint
 pnpm typecheck
-pnpm test
-pnpm test:integration
-pnpm test:e2e
 pnpm local-first:scan
-pnpm security:scan
+pnpm test
+pnpm build
 ```
 
-### 6) Config & Env
-From `.env.example` and `apps/api/.env.example`:
-- `ADMIN_API_KEY`, `CONTENT_STORAGE_ROOT`, `CORS_ALLOW_ORIGINS`, `CSRF_ENABLED`
-- `DATABASE_URL`, `HOST`, `PORT`, `WEB_PORT`
-- `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `SESSION_SECRET`
-- `MINIO_ENDPOINT`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`
-- `PAYMENT_GATEWAY`, `PAYMENT_GATEWAY_BASE_URL`, `PAYMENT_GATEWAY_TIMEOUT_MS`, `PAYMENT_GATEWAY_WEBHOOK_SECRET`
+Broader verification:
+
+```bash
+pnpm test:integration
+pnpm test:e2e
+pnpm smoke:mock-payment
+pnpm runtime:health:report
+```
+
+## Environment Highlights
+
+See `.env.example` and `apps/api/.env.example`.
+
+Important variables include:
+
+- `DATABASE_URL`
 - `PUBLIC_BASE_URL`
+- `JWT_ACCESS_SECRET`
+- `JWT_REFRESH_SECRET`
+- `SESSION_SECRET`
+- `PAYMENT_GATEWAY`
+- `PAYMENT_GATEWAY_BASE_URL`
+- `PAYMENT_GATEWAY_WEBHOOK_SECRET`
+- `CONTENT_STORAGE_ROOT`
 
-### 7) Deploy/Operations
-- Production phased scripts: `production:phase-a` ... `production:phase-g`
-- Release controls: `release:rc:gates`, `release:go-no-go:evidence`, `release:deploy:dry-run`, `release:rollback:validate`
-- Runtime health report: `pnpm runtime:health:report`
-- API health evidence in reports references `GET /api/v1/health/db`
+## Operations and Release Flow
 
-### 8) Links
-- Repo: https://github.com/parsairaniiidev/creatormembership
-- Issues: https://github.com/parsairaniiidev/creatormembership/issues
-- Discussions: https://github.com/parsairaniiidev/creatormembership/discussions
+- phased production scripts: `production:phase-a` through `production:phase-g`
+- release evidence and go/no-go scripts are available at repo root
+- rollback validation is part of the release discipline
+- runtime health reporting is included for operational visibility
 
-### 9) Status & Compatibility
-- Last documentation sync: 2026-02-27
-- Base sync snapshot: `main`, `dirty (local .codex/config.toml)`, `ahead 0`, `behind 0`
+## Who This Is For
+
+- creators selling premium access or digital products
+- teams who need a self-controlled membership workflow
+- operators who care about release confidence and local resilience
+
+## Positioning
+
+If you need a production-minded membership platform with local-first priorities, this project shows how I approach product architecture, gated access, release workflows, and operational control in one system.
