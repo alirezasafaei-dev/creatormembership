@@ -1,5 +1,9 @@
 # CreatorMembership
 
+<p align="center">
+  <img src="./assets/repo-preview.svg" alt="CreatorMembership preview" width="100%" />
+</p>
+
 Local-first creator membership platform for gated digital products, access control, and production-minded delivery.
 
 ## What This Project Is
